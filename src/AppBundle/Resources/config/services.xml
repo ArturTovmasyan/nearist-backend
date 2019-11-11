@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- Core -->
+        <parameter key="core.model.user.provider.class">AppBundle\Model\User\UserProvider</parameter>
+        <parameter key="core.entity.user.class">AppBundle\Entity\Portal\User</parameter>
+        <parameter key="core.repository.user.class">AppBundle\Repository\UserRepository</parameter>
+    </parameters>
+    <services>
+        <service id="core.model.user.provider" class="%core.model.user.provider.class%">
+            <argument type="service" id="core.user.repository"/>
+        </service>
+        <service id="core.user.manager" class="Doctrine\ORM\EntityManager">
+            <factory service="doctrine" method="getManagerForClass" />
+            <argument>%core.entity.user.class%</argument>
+        </service>
+        <service id="core.user.repository" class="%core.repository.user.class%">
+            <factory service="core.user.manager" method="getRepository" />
+            <argument>%core.entity.user.class%</argument>
+        </service>
+        <service id="core.user.repository" class="%core.repository.user.class%">
+            <factory service="core.user.manager" method="getRepository" />
+            <argument>%core.entity.user.class%</argument>
+        </service>
+    </services>
+
+</container>

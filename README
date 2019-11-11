@@ -1,0 +1,35 @@
+Add following to Apache2 config
+
+DocumentRoot "..../nearist.frontend/dist"
+<Directory "..../nearist.frontend/dist">
+    Require all granted
+
+    RewriteEngine on
+
+    # Don't rewrite files or directories
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Rewrite everything else to index.html
+    # to allow html5 state links
+    RewriteRule ^ index.html [L]
+</Directory>
+
+Alias "/backend" "..../nearist.backend/web"
+<Directory "..../nearist.backend/web">
+    Require all granted
+
+    #Options FollowSymLinks MultiViews
+    AllowOverride All
+</Directory>
+
+RewriteEngine on
+RewriteRule ^/cgi/(.*)$ http://localhost/agent/index.php/api/v1.0/stub/ipmi/$1 [R=307,L]
+Alias "/agent" "..../nearist.agent/public"
+<Directory "..../nearist.agent/public">
+    Require all granted
+
+    #Options FollowSymLinks MultiViews
+    AllowOverride All
+</Directory>

@@ -1,0 +1,29 @@
+{% extends "AppBundle::email/base.html.twig" %}
+{% block title %}{{ subject }}{% endblock %}
+{% block content %}
+    <p>Dear Partners,</p>
+    <p>There was a new bitstream uploaded to Nearist Management Portal.</p>
+    <p>Bitstream details:</p>
+
+    <blockquote>
+        <p>Board Type: <strong>{{ extra.board_list[object.boardType] }}</strong></p>
+        <p>Description: <strong>{{ object.description }}</strong></p>
+        <p>Files:</p>
+        <blockquote>
+            {% for device_id, device_name in extra.device_list %}
+                {% for bitstream in object.bitstreams if bitstream.device == device_id %}
+                    {% if loop.first %}
+                        <p style="padding-bottom: 0;margin-bottom: 0;"><strong>{{ device_name }}</strong></p>
+                        <ul style="margin-top: 0;list-style: none; font-size:smaller;">
+                    {% endif %}
+                    {#{{ dump(bitstream) }}#}
+
+                    <li><strong>{{ extra.file_list[bitstream.fileType] }}</strong>
+                        - {{ bitstream.fileName }}
+                    </li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+        </blockquote>
+    </blockquote>
+{% endblock %}

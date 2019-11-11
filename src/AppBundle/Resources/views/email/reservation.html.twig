@@ -1,0 +1,12 @@
+{% extends "AppBundle::email/base.html.twig" %}
+{% block title %}{{ subject }}{% endblock %}
+{% block content %}
+    <p>Dear {{ user.fullName }},</p>
+    <p>There was a new reservation created in Nearist Management Portal for you.</p>
+    <p>Reservation details:</p>
+    <blockquote>
+        <p>Server: <strong>{{ object.server.name }} ({{ object.server.ip }})</strong></p>
+        <p>Start Date: <strong>{{ object.startDate|date }}</strong></p>
+        <p>Start Date: <strong>{{ object.endDate|date }}</strong></p>
+    </blockquote>
+{% endblock %}

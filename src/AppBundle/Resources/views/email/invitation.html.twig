@@ -1,0 +1,11 @@
+{% extends "AppBundle::email/base.html.twig" %}
+{% block title %}{{ subject }}{% endblock %}
+{% block content %}
+    <p>Dear {{ user.fullName }},</p>
+    <p>You are invited to project Nearist.</p>
+    <p>Sign in with <a href="{{ extra }}/login">url</a>:</p>
+    <blockquote>
+        <p>Email: <strong>{{ user.email }}</strong></p>
+        <p>Temporary password: <strong>{{ user.plainPassword }}</strong></p>
+    </blockquote>
+{% endblock %}

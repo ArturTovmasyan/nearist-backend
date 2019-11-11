@@ -1,0 +1,83 @@
+# To get started with security, check out the documentation:
+# https://symfony.com/doc/current/security.html
+security:
+    encoders:
+        CoreBundle\Entity\User: sha512
+
+    # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
+    providers:
+        core_user_provider:
+            id: core.model.user.provider
+#        in_memory:
+#            memory: ~
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        oauth_token:
+            pattern:   ^/oauth/v2/token
+            security:  false
+
+        oauth_authorize:
+            pattern:   ^/oauth/v2/auth
+            anonymous: true
+
+        api_login:
+            pattern:   ^/security/login
+            fos_oauth: true
+            stateless: true
+            anonymous: true
+
+        api_logout:
+            pattern:   ^/api/v1.0/security/logout
+            fos_oauth: true
+            stateless: true
+            anonymous: true
+
+        api_get_user_by_hash:
+            pattern:   ^/api/v1.0/user/hash/*
+            fos_oauth: false
+            stateless: true
+            anonymous: true
+
+        api_forgot_password:
+            pattern:   ^/api/v1.0/security/forgot-password
+            fos_oauth: false
+            stateless: true
+            anonymous: true
+
+        api_confirm_password:
+            pattern:   ^/api/v1.0/security/confirm-password
+            fos_oauth: false
+            stateless: true
+            anonymous: true
+
+        api_stub:
+            pattern:   ^/api/v1.0/iflex/stub/*
+            fos_oauth: false
+            stateless: true
+            anonymous: true
+
+        api:
+            pattern:   ^/api/v1.0/*
+            fos_oauth: true
+            stateless: true
+            anonymous: false
+
+#        main:
+#            anonymous: ~
+            # activate different ways to authenticate
+
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+            #http_basic: ~
+
+            # https://symfony.com/doc/current/security/form_login_setup.html
+            #form_login: ~
+
+#    access_control:
+#        ######    Nemio api-doc
+#        ###       Rest
+#        - { path: ^/api/doc                                             , role: [ 'ROLE_IMT_ADMIN' ] }
